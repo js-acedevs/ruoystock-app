@@ -16,8 +16,7 @@ export const HeaderLayout = () => {
         alignItems: 'center',
         justifyContent: 'space-between',
         borderBottom: `1px solid ${colorScheme === 'dark' ? colors.dark[4] : colors.gray[2]}`
-      })}
-    >
+      })}>
       <Group position="apart" align="center" sx={{ width: '100%' }}>
         <Center inline component={Link} to="/">
           <Logo colorScheme={colorScheme === 'dark' ? 'dark' : 'light'} />

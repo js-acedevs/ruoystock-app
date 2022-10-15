@@ -15,8 +15,7 @@ export const Navlink = ({ icon, color, label, to }: NavlinkProps) => (
       '&:hover': {
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]
       }
-    })}
-  >
+    })}>
     <Group>
       <ThemeIcon color={color} variant="light">
         {icon}

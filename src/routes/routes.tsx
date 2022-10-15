@@ -1,6 +1,6 @@
 import { ReactLocation, Route } from '@tanstack/react-location';
-import DashboardPage from '../pages/DashboardPage';
-import UsersPage from '../pages/UsersPage';
+import DashboardPage from 'pages/DashboardPage';
+import UsersPage from 'pages/UsersPage';
 import { LocationGenerics } from './routes.types';
 
 // Set up a ReactLocation instance
