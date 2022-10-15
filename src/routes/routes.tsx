@@ -1,4 +1,6 @@
 import { ReactLocation, Route } from '@tanstack/react-location';
+import DashboardPage from '../pages/DashboardPage';
+import UsersPage from '../pages/UsersPage';
 import { LocationGenerics } from './routes.types';
 
 // Set up a ReactLocation instance
@@ -11,7 +13,7 @@ export const routes: Route<LocationGenerics>[] = [
     children: [
       {
         path: '/', // matches /dashboard exactly
-        element: <div>dashboard</div>
+        element: <DashboardPage />
       },
       {
         path: 'teams', // matches /dashboard/teams/* (notice the fuzzy match)
@@ -19,7 +21,7 @@ export const routes: Route<LocationGenerics>[] = [
       },
       {
         path: 'users', // matches /dashboard/users/*
-        element: <div>users</div>
+        element: <UsersPage />
       },
       {
         element: `Render as the fallback when 'teams/' or '/users' are not matched`
