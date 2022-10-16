@@ -3,8 +3,8 @@ import { User } from '../interfaces/User.model';
 
 export type LocationGenerics = MakeGenerics<{
   LoaderData: {
-    users: User[];
-    user: User;
+    users?: User[];
+    user?: User;
   };
   Params: {
     userId: string;

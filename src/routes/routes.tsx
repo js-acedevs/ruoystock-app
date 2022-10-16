@@ -1,6 +1,8 @@
 import { ReactLocation, Route } from '@tanstack/react-location';
+import { useQueryClient } from '@tanstack/react-query';
+import { queryClient } from 'App';
 import DashboardPage from 'pages/DashboardPage';
-import UsersPage from 'pages/UsersPage';
+import UsersPage, { getUsers } from 'pages/UsersPage';
 import { LocationGenerics } from './routes.types';
 
 // Set up a ReactLocation instance
@@ -21,7 +23,14 @@ export const routes: Route<LocationGenerics>[] = [
       },
       {
         path: 'users', // matches /dashboard/users/*
-        element: <UsersPage />
+        element: <UsersPage />,
+        loader: async () => {
+          await queryClient.prefetchQuery(['users'], getUsers, {
+            staleTime: 10 * 1000 // only prefetch if older than 10 seconds
+          });
+
+          return { users: [] };
+        }
       },
       {
         element: `Render as the fallback when 'teams/' or '/users' are not matched`
