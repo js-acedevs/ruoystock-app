@@ -1,34 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from 'react';
+import { Outlet, Router } from '@tanstack/react-location';
+import { rankRoutes } from '@tanstack/react-location-rank-routes';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+// import { ReactLocationDevtools } from '@tanstack/react-location-devtools';
+import { AppShell, ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { routes, location } from './routes/routes';
+import { NavbarLayout, HeaderLayout } from './components/templates';
 
-function App() {
-  const [count, setCount] = useState(0)
+export const queryClient = new QueryClient();
+
+const App = () => {
+  const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
+  const toggleColorScheme = () => setColorScheme(colorScheme === 'dark' ? 'light' : 'dark');
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
-}
+    <QueryClientProvider client={queryClient}>
+      <Router location={location} routes={routes} filterRoutes={rankRoutes}>
+        <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+          <MantineProvider withGlobalStyles withNormalizeCSS>
+            <AppShell
+              header={<HeaderLayout />}
+              navbar={<NavbarLayout />}
+              styles={({ colors }) => ({
+                main: { background: colorScheme === 'dark' ? colors.dark[8] : colors.gray[0] }
+              })}>
+              <Outlet />
+            </AppShell>
+            <ReactQueryDevtools initialIsOpen position="bottom-right" />
+            {/* <ReactLocationDevtools position="bottom-left" /> */}
+          </MantineProvider>
+        </ColorSchemeProvider>
+      </Router>
+    </QueryClientProvider>
+  );
+};
 
-export default App
+export default App;
